@@ -5,22 +5,20 @@ Vue.use(Vuex)
 
 const initQuery = {
   union: '',
-  ftype: '',
   dep: 'PEK',
-  depType: '',
   aircode: '',
   arr: 'SZX',
-  arrType: '',
-  isStop: '',
-  isCross: '',
-  isConnect: ''
+  isStop: 0,      // 经停
+  isCross: 0,    // 跨境
+  isConnect: 0,  // 转机
+  isDomestic: 1,  // 境内
 };
 
 const store = new Vuex.Store({
   state: {
     query: Object.assign({}, initQuery),
 
-    result: []
+    result: {}
   },
 
   mutations: {
@@ -32,6 +30,12 @@ const store = new Vuex.Store({
       const tmp = state.query.dep;
       state.query.dep = state.query.arr;
       state.query.arr = tmp;
+    },
+
+    gotresult (state, result) {
+    },
+
+    goterror (state, error) {
     }
   }
 })

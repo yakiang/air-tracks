@@ -16,7 +16,7 @@
       <div class="space"></div>
       <img id="reset" src="../../../static/reset.png" @click="resetQuery"/>
       <div class="space"></div>
-      <img id="search" src="../../../static/search.png" />
+      <img id="search" src="../../../static/search.png" @click="sendQuery"/>
       <div class="space"></div>
     </div>
   </div>
@@ -43,8 +43,30 @@ export default {
     resetQuery: function () {
       store.commit('reset');
     },
+
     exchangeAirports: function () {
       store.commit('exchange');
+    },
+
+    sendQuery: function () {
+      wx.request({
+        url: 'https://map.variflight.com/___api/SuXAvAQ0qWkchQuUUqHN/dr',
+        method: 'POST',
+        data: store.state.query,
+        header: {
+          'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        success (res) {
+          if (!res.data.code) {
+            store.commit('gotresult', res.data.data);
+          } else {
+            store.commit('goterror', res.data.msg);
+          }
+        },
+        fail (e) {
+          store.commit('goterror', e);
+        }
+      });
     }
   },
 
@@ -64,12 +86,12 @@ export default {
   }
   #dep-airport {
     text-align: left;
-    padding-left: 10vw;
+    padding: 0 10vw;
     flex: 1;
   }
   #arr-airport {
     text-align: right;
-    padding-right: 10vw;
+    padding: 0 10vw;
     flex: 1;
   }
   #exchange {
