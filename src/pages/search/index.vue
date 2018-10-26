@@ -14,7 +14,7 @@
 
     <div id="buttons">
       <div class="space"></div>
-      <img id="reset" src="../../../static/reset.png" />
+      <img id="reset" src="../../../static/reset.png" @click="resetQuery"/>
       <div class="space"></div>
       <img id="search" src="../../../static/search.png" />
       <div class="space"></div>
@@ -40,7 +40,10 @@ export default {
   },
 
   methods: {
-    exchangeAirports: () => {
+    resetQuery: function () {
+      store.commit('reset');
+    },
+    exchangeAirports: function () {
       store.commit('exchange');
     }
   },
