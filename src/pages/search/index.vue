@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div id="airports">
-      <input id="dep-airport" v-model="dep" />
-      <img id="exchange" src="../../../static/exchange.png" />
-      <input id="arr-airport" v-model="arr" />
+      <input id="dep-airport" v-model="query.dep" />
+      <img id="exchange" src="../../../static/exchange.png" @click="exchangeAirports"/>
+      <input id="arr-airport" v-model="query.arr" />
     </div>
 
     <div id="filters">
@@ -23,19 +23,16 @@
 </template>
 
 <script>
+import store from '../../store'
+
 export default {
   data () {
-    return {
-      union: '',
-      ftype: '',
-      dep: 'PEK',
-      depType: '',
-      aircode: '',
-      arr: 'SZX',
-      arrType: '',
-      isStop: '',
-      isCross: '',
-      isConnect: ''
+    return {}
+  },
+
+  computed: {
+    query () {
+      return store.state.query;
     }
   },
 
@@ -43,6 +40,9 @@ export default {
   },
 
   methods: {
+    exchangeAirports: () => {
+      store.commit('exchange');
+    }
   },
 
   created () {
